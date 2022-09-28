@@ -61,7 +61,6 @@ const userSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: models.personalRecord,
         required: false,
-        unique: true,
       },
     ],
     personalGoals: [
@@ -69,7 +68,6 @@ const userSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: models.personalGoal,
         required: false,
-        unique: true,
       },
     ],
     wodScores: [
@@ -77,7 +75,6 @@ const userSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: models.wodScore,
         required: false,
-        unique: true,
       },
     ],
   },
