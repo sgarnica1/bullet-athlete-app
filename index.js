@@ -9,6 +9,15 @@ const port = process.env.PORT || 4000;
 const config = require("./src/config/index");
 const initRoutes = require("./src/routes/index");
 
+// CORS
+const cors = require("cors");
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN,
+    optionsSuccessStatus: 200,
+  })
+);
+
 // MIDDLEWARE
 app.use(express.json());
 
@@ -28,9 +37,14 @@ app.get("/", (_, res) => {
   res.redirect(config.BASE_PATH);
 });
 
-const authUtil = require("./src/utils/auth");
+const authMiddleware = require("./src/middleware/auth");
+app.get("/user", authMiddleware.isAdmin, (req, res) =>
+  res.json({ message: "ok" })
+);
 
-const token = authUtil.createTokenLogin({ user: "sgarnica1", id: "1" });
-console.log(`token: ${token}`);
+// 404 ERROR
+app.use((_, res) => {
+  res.status(404).json({ message: "Resource not found" });
+});
 
 // console.log(require('crypto').randomBytes(64).toString('hex'))

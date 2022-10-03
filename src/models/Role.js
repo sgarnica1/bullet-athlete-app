@@ -15,13 +15,6 @@ const roleSchema = new mongoose.Schema(
         required: false,
       },
     ],
-    // permissions: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: models.permission,
-    //     required: false,
-    //   },
-    // ],
   },
   {
     timestamps: true,
