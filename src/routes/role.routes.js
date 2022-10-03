@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const controller = require("../controllers/permission.controller");
+const controller = require("../controllers/role.controller");
 
-// GET ALL PERMISSIONS
 router.get("/", controller.getAll);
+router.get("/:id", controller.getOne);
 router.post("/register", controller.postOne);
 
 module.exports = router;

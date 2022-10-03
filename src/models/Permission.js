@@ -10,13 +10,13 @@ const permissionSchema = new mongoose.Schema(
     active: {
       type: Boolean,
       required: true,
+      default: true
     },
     roles: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: models.role,
         required: false,
-        unique: true,
       },
     ],
   },

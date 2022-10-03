@@ -6,7 +6,7 @@ if (process.env.NODE_ENV !== "production") {
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 4000;
-const config = require("./src/utils/config");
+const config = require("./src/config/index");
 const initRoutes = require("./src/routes/index");
 
 // MIDDLEWARE
@@ -27,3 +27,10 @@ initRoutes(app);
 app.get("/", (_, res) => {
   res.redirect(config.BASE_PATH);
 });
+
+const authUtil = require("./src/utils/auth");
+
+const token = authUtil.createTokenLogin({ user: "sgarnica1", id: "1" });
+console.log(`token: ${token}`);
+
+// console.log(require('crypto').randomBytes(64).toString('hex'))
