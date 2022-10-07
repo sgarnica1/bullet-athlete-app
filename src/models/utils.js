@@ -4,11 +4,12 @@ const models = {
   permission: "Permission",
   personalGoal: "PersonalGoal",
   personalRecord: "PersonalRecord",
+  refreshToken: "RefreshToken",
   role: "Role",
   scoreType: "ScoreType",
   user: "User",
   wod: "Wod",
-  wodScore: "WodScore"
+  wodScore: "WodScore",
 };
 
 module.exports = models;
