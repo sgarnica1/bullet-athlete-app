@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Role = require("../models/Role");
 const validation = require("../utils/validation");
 const bcrypt = require("bcrypt");
 const authToken = require("../utils/auth");
@@ -37,9 +38,14 @@ const createOne = async (req, res) => {
 
   try {
     const savedUser = await user.save();
+    req.body.roles.map(async (role) => {
+      const userRole = await Role.findById(role);
+      userRole.users.push(savedUser);
+      userRole.save()
+    });
     res.status(201).json(savedUser);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 

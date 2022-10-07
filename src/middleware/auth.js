@@ -3,14 +3,13 @@ const User = require("../models/User");
 const Role = require("../models/Role");
 
 const authMiddleware = {
-  // Validate token is active
+  // VALIDATE ACTIVE TOKEN
   validateTokenActive: (req, res, next) => {
-    // const token = req.header("auth-token");
     let token;
     try {
       token = req.headers.authorization.split(" ")[1];
     } catch (error) {
-      return res.status(401).json({ error: "Access denied" });
+      return res.status(401).json({ error: "Access denied. Please login to system." });
     }
 
     try {
@@ -25,14 +24,17 @@ const authMiddleware = {
   // ADMIN ROLE
   isAdmin: async (req, res, next) => {
     try {
-      const user = await User.findById(req.body.userId); // User
-      const roles = await Role.find({ _id: { $in: user.roles } });
+      if(!req.body.idUser) { // Check if isUser is included in the request body
+        throw new Error("Login to system")
+      }
+      const user = await User.findById(req.body.idUser); // User
+      const roles = await Role.find({ _id: { $in: user.roles } }); // Find all user roles
       for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "admin") {
+        if (roles[i].name === "admin") { // Verify if user had admin role
           return next();
         }
       }
-      return res.status(400).json({ error: "Require Admin Role" });
+      res.status(400).json({ error: "Require Admin Role" });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

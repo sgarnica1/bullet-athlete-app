@@ -13,7 +13,6 @@ const scoreTypeSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: models.movement,
         required: false,
-        unique: true,
       },
     ],
     wods: [
@@ -21,7 +20,6 @@ const scoreTypeSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: models.wod,
         required: false,
-        unique: true,
       },
     ],
   },

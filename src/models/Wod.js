@@ -3,6 +3,11 @@ const models = require("./utils");
 
 const wodSchema = new mongoose.Schema(
   {
+    date: {
+      type: Date,
+      required: true, 
+      unique: true
+    },
     description: {
       type: String,
       required: true,
@@ -29,7 +34,6 @@ const wodSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: models.wod,
         required: false,
-        unique: true,
       },
     ],
   },

@@ -24,7 +24,6 @@ const getOne = async (req, res) => {
 const postOne = async (req, res) => {
   const role = new Role({
     name: req.body.name,
-    roles: req.body.roles,
   });
   try {
     const savedRole = await role.save();
