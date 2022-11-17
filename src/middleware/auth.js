@@ -28,11 +28,11 @@ const authMiddleware = {
   // ADMIN ROLE
   isAdmin: async (req, res, next) => {
     try {
-      if (!req.body.idUser) {
+      if (!req.body.idAdmin) {
         // Check if isUser is included in the request body
-        throw new Error("Login to system");
+        throw new Error("Missing idAdmin on request body.");
       }
-      const user = await User.findById(req.body.idUser); // User
+      const user = await User.findById(req.body.idAdmin); // User
       const roles = await Role.find({ _id: { $in: user.roles } }); // Find all user roles
       for (let i = 0; i < roles.length; i++) {
         if (roles[i].name === "admin") {

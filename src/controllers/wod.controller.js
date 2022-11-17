@@ -1,4 +1,5 @@
 const Wod = require("../models/Wod");
+const ScoreType = require("../models/ScoreType")
 const validation = require("../utils/validation");
 
 const wodController = {
@@ -56,6 +57,13 @@ const wodController = {
 
     try {
       const newWod = await wod.save();
+
+      // Add Wod to ScoreType
+      const wodScoreType = await ScoreType.findById(req.body.scoretype)
+      wodScoreType.movements.push(movement)
+      await wodScoreType.save()
+
+      // Res
       res.status(201).json(newWod);
     } catch (error) {
       res.status(400).json({ error: error.message });
@@ -83,11 +91,13 @@ const wodController = {
   },
   // DELETE ONE
   deleteOneById: async (req, res) => {
+    // Using middleware to get the Wod in res.wod
     try {
-      const deletedWod = await res.wod.remove();
+      // const deletedWod = await res.wod.remove();
+      const inactiveWod = await res.wod.update({active: false})
       res
         .status(200)
-        .json({ message: `Wod successfully deleted with id ${deletedWod.id}` });
+        .json({ message: `Wod successfully deleted with id ${inactiveWod.id}` });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

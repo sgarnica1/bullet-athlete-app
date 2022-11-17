@@ -8,6 +8,11 @@ const roleSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    active: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
     users: [
       {
         type: mongoose.Schema.Types.ObjectId,

@@ -18,6 +18,18 @@ const movementSchema = new mongoose.Schema(
       ref: models.scoreType,
       required: true,
     },
+    active: {
+      type: Boolean,
+      required: true,
+      default: true
+    },
+    personalRecords: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: models.personalRecord,
+        required: false,
+      },
+    ],
   },
   {
     timestamps: true,

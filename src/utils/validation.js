@@ -3,6 +3,7 @@ const Joi = require("joi").extend(require("@joi/date"));
 const validation = {
   // REGISTER NEW USER
   schemaRegister: Joi.object({
+    idAdmin: Joi.string().required(),
     firstName: Joi.string().max(255).required(),
     lastName: Joi.string().max(255).required(),
     email: Joi.string().required().email(),

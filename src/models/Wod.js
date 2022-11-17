@@ -5,8 +5,8 @@ const wodSchema = new mongoose.Schema(
   {
     date: {
       type: Date,
-      required: true, 
-      unique: true
+      required: true,
+      unique: true,
     },
     description: {
       type: String,
@@ -24,6 +24,11 @@ const wodSchema = new mongoose.Schema(
         },
       },
     ],
+    active: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
     scoreType: {
       type: mongoose.Schema.Types.ObjectId,
       ref: models.scoreType,

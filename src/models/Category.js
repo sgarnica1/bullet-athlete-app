@@ -8,6 +8,11 @@ const categorySchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    active: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
     movements: [
       {
         type: mongoose.Schema.Types.ObjectId,
