@@ -15,7 +15,8 @@ const authController = {
     }
 
     const user = await User.findOne({ email: req.body.email });
-    if (!user) return res.status(400).json({ error: "Datos de acceso incorrectos" });
+    if (!user)
+      return res.status(400).json({ error: "Datos de acceso incorrectos" });
 
     const validPassword = await bcrypt.compare(
       req.body.password,
@@ -57,40 +58,45 @@ const authController = {
   },
   //CREATE TOKEN
   createToken: async (req, res) => {
-    let userData;
-    if (req.body.refreshToken) {
-      userData = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        id: req.body.id,
-      };
-    }
+    
+      let userData; let decodedTokenInfo;
 
-    try {
-      authToken.verifyToken(req.body.refreshToken, "refreshToken");
-    } catch (error) {
-      return res.status(400).json({ error: error.message });
-    }
+      try {
+        // VERIFY TOKEN AND GET USER DATA FROM IT
+        decodedTokenInfo = authToken.verifyToken(req.body.refreshToken, "refreshToken");
+        // CREATE USER DATA OBJECT
+        userData = {
+          firstName: decodedTokenInfo.firstName,
+          lastName: decodedTokenInfo.lastName,
+          id: decodedTokenInfo.id,
+        };
+      } catch (error) {
+        return res.status(400).json({ error: error.message });
+      }
 
-    const token = authToken.createTokenLogin(userData);
-    const refreshToken = authToken.createRefreshToken(userData);
+      // CREATE NEW TOKENS
+      const token = authToken.createTokenLogin(userData);
+      const refreshToken = authToken.createRefreshToken(userData);
 
-    const newRefreshToken = new RefreshToken({
-      token: refreshToken,
-      user: req.body.id,
-      expiryDate: Date.now(),
-    });
+      // CREATE NEW REFRESH TOKEN OBJECT
+      const newRefreshToken = new RefreshToken({
+        token: refreshToken,
+        user: decodedTokenInfo.id,
+        expiryDate: Date.now(),
+      });
 
-    try {
-      await newRefreshToken.save();
-    } catch (error) {
-      return res.status(400).json({ error: error.message });
-    }
+      try {
+        // SAVE NEW REFRESH TOKEN
+        await newRefreshToken.save();
+      } catch (error) {
+        return res.status(400).json({ error: error.message });
+      }
 
-    return res.status(200).header("auth-token", token).json({
-      token,
-      refreshToken,
-    });
+      // RETURN NEW TOKENS
+      return res.status(200).header("auth-token", token).json({
+        token,
+        refreshToken,
+      });
   },
 };
 

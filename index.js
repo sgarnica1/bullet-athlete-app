@@ -13,7 +13,7 @@ const initRoutes = require("./src/routes/index");
 const cors = require("cors");
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: "*",
     optionsSuccessStatus: 200,
   })
 );

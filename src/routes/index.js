@@ -1,7 +1,6 @@
 const config = require("../config/index");
 const authMiddleware = require("../middleware/auth");
 const publicRouter = require("./public.routes");
-const authRouter = require("./auth.routes");
 const userRouter = require("./user.routes");
 const roleRouter = require("./role.routes");
 const scoreTypeRouter = require("./scoreType.routes");
@@ -14,7 +13,6 @@ const skillsRouter = require("./skills.routes");
 
 const initRoutes = (app) => {
   app.use(config.BASE_PATH, publicRouter);
-  app.use(`${config.BASE_PATH}/auth`, authRouter);
   app.use(authMiddleware.validateTokenActive); // TOKEN VALIDATION
   app.use(`${config.BASE_PATH}/users`, userRouter);
   app.use(`${config.BASE_PATH}/wods`, wodRouter);
