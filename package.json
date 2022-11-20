@@ -4,8 +4,9 @@
   "description": "Backend for Bullet Athlete App",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon index.js",
-    "start": "node index.js"
+    "dev": "nodemon ./index.js",
+    "build": "rm -rf dist && webpack --mode development",
+    "start": "node ./dist/bundle.js"
   },
   "author": "Sergio Garnica González <sgarnica1902@gmail.com>",
   "license": "ISC",
@@ -21,7 +22,13 @@
     "mongoose": "^6.6.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.2",
+    "@babel/preset-env": "^7.20.2",
+    "babel-loader": "^9.1.0",
     "dotenv": "^16.0.2",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.0",
+    "webpack-node-externals": "^3.0.0"
   }
 }

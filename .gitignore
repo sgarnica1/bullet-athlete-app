@@ -1,2 +1,8 @@
+## NODE MODULES
 node_modules/
+
+## DISTRIBUTION FOLDER
+dist/
+
+## TEST AND TXT FILES
 *.txt
