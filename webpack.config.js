@@ -9,7 +9,8 @@ module.exports = {
     publicPath: '/',
     filename: 'bundle.js'
   },
-  target: 'node',
+  target: 'web',
+  devtool: 'source-map',
   node: {
     // Need this when working with express, otherwise the build fails
     __dirname: false,   // if you don't put this is, __dirname

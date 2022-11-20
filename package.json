@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./index.js",
-    "build": "rm -rf dist && webpack --mode development",
+    "build": "rm -rf dist && webpack --mode development --config webpack.config.js && webpack --mode development",
     "start": "node ./dist/bundle.js"
   },
   "author": "Sergio Garnica González <sgarnica1902@gmail.com>",
