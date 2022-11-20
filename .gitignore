@@ -6,3 +6,6 @@ dist/
 
 ## TEST AND TXT FILES
 *.txt
+
+## ENV
+.env
