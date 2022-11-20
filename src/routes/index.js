@@ -10,6 +10,7 @@ const wodRouter = require("./wod.routes");
 const wodScoreRouter = require("./wodscore.routes");
 const movementRouter = require("./movement.routes");
 const personalRecordRouter = require("./personalRecord.routes");
+const skillsRouter = require("./skills.routes");
 
 const initRoutes = (app) => {
   app.use(config.BASE_PATH, publicRouter);
@@ -23,6 +24,7 @@ const initRoutes = (app) => {
   app.use(`${config.BASE_PATH}/categories`, categoryRouter);
   app.use(`${config.BASE_PATH}/pr`, personalRecordRouter);
   app.use(`${config.BASE_PATH}/movements`, movementRouter);
+  app.use(`${config.BASE_PATH}/skills`, skillsRouter);
 };
 
 module.exports = initRoutes;

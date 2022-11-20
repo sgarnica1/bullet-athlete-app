@@ -1,57 +1,10 @@
 const User = require("../models/User");
-const Role = require("../models/Role");
 const RefreshToken = require("../models/RefreshToken");
 const validation = require("../utils/validation");
 const bcrypt = require("bcrypt");
 const authToken = require("../utils/auth");
 
 const authController = {
-  // REGISTER NEW USER
-  createUser: async (req, res) => {
-    const { error } = validation.schemaRegister.validate(req.body);
-
-    if (error) {
-      return res.status(400).json({
-        error: error.details[0].message,
-      });
-    }
-
-    const emailAlreadyRegistered = await User.findOne({
-      email: req.body.email,
-    });
-    if (emailAlreadyRegistered) {
-      return res.status(400).json({ error: "Email already registered" });
-    }
-
-    // Hash password
-    const salt = await bcrypt.genSalt(10);
-    const password = await bcrypt.hash(req.body.password, salt);
-
-    const user = new User({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      phoneNumber: req.body.phoneNumber,
-      birthDay: req.body.birthDay,
-      profilePicture: req.body.profilePicture,
-      password: password,
-    });
-    req.body.roles.map((role) => {
-      user.roles.push(role);
-    });
-
-    try {
-      const savedUser = await user.save();
-      req.body.roles.map(async (role) => {
-        const userRole = await Role.findById(role);
-        userRole.users.push(savedUser);
-        userRole.save();
-      });
-      res.status(201).json(savedUser);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  },
   // LOGIN
   login: async (req, res) => {
     const { error } = validation.schemaLogin.validate(req.body);
@@ -62,14 +15,14 @@ const authController = {
     }
 
     const user = await User.findOne({ email: req.body.email });
-    if (!user) return res.status(400).json({ error: "User not found" });
+    if (!user) return res.status(400).json({ error: "Datos de acceso incorrectos" });
 
     const validPassword = await bcrypt.compare(
       req.body.password,
       user.password
     );
     if (!validPassword)
-      return res.status(400).json({ error: "Wrong Password" });
+      return res.status(400).json({ error: "Datos de acceso incorrectos" });
 
     const userData = {
       firstName: user.firstName,

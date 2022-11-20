@@ -7,6 +7,7 @@ const models = {
   refreshToken: "RefreshToken",
   role: "Role",
   scoreType: "ScoreType",
+  skill: "Skill",
   user: "User",
   wod: "Wod",
   wodScore: "WodScore",

@@ -32,17 +32,17 @@ const movementController = {
     try {
       const savedMovement = await movement.save();
       
-      // Add movement to category
+      // ADD MOVEMENT TO CATEGORY
       const movementCategory = await Category.findById(req.body.category)
       movementCategory.movements.push(savedMovement)
       await movementCategory.save()
 
-      // Add movement to ScoreType
+      // ADD MOVEMENT TO SCORETYPE
       const movementScoreType = await ScoreType.findById(req.body.scoretype)
       movementScoreType.movements.push(movement)
       await movementScoreType.save()
 
-      // Return data
+      // RETURN DATA
       res.status(201).json(savedMovement);
     } catch (error) {
       res.status(400).json({ message: error.message, name: error.name });

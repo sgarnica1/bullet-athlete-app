@@ -49,7 +49,7 @@ const userSchema = new mongoose.Schema(
         required: true,
       },
     ],
-    movements: [
+    skills: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: models.movement,
@@ -77,6 +77,11 @@ const userSchema = new mongoose.Schema(
         required: false,
       },
     ],
+    darkTheme: {
+      type: Boolean,
+      required: false,
+      default: false,
+    }
   },
   {
     timestamps: true,

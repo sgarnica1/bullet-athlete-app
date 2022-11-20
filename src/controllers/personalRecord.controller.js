@@ -8,7 +8,7 @@ const personalRecordController = {
     try {
       const personalRecords = await PersonalRecord.find({
         user: req.params.id,
-      });
+      }).populate("movement");
       res.status(200).json(personalRecords);
     } catch (error) {
       res.status(500).json({ message: error.message, name: error.name });
@@ -17,19 +17,19 @@ const personalRecordController = {
   // GET ONE
   getOneById: async (req, res) => {
     try {
-      const personalRecord = await PersonalRecord.findById(req.params.id);
+      const personalRecord = await PersonalRecord.findById(req.params.id).populate("movement").populate("user");
       res.status(200).json(personalRecord);
     } catch (error) {
       res.status(400).json({ message: error });
     }
   },
   // GET HISTORY
-  getHistoryByMovement: async (req, res) => {
+  getUserHistoryByMovement: async (req, res) => {
     try {
       const personalRecord = await PersonalRecord.find({
-        movement: req.params.idmov,
-        user: req.params.iduser,
-      });
+        movement: req.query.movement,
+        user: req.query.user,
+      }).populate("movement").populate("user");
       res.status(200).json(personalRecord);
     } catch (error) {
       res.status(400).json({ message: error });
@@ -85,12 +85,15 @@ const personalRecordController = {
   },
   // DELETE (ACTIVE = FALSE)
   delete: async (req, res) => {
+    const prUpdated = {
+      active: false,
+    };
     try {
       let pr = await PersonalRecord.findById(req.params.id);
-      pr.deleteOne();
-      res.status(200).json(pr);
+      const updatedPR = await pg.update(prUpdated);
+      res.status(200).json(updatedPR);
     } catch (error) {
-      res.status(400).json({ message: error });
+      res.status(501).json({ error: error.message });
     }
   },
 };

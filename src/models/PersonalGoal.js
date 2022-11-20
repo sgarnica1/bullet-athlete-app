@@ -37,6 +37,7 @@ const personalGoalSchema = new mongoose.Schema(
     achieved: {
       type: Boolean,
       required: true,
+      default: false,
     },
   },
   {

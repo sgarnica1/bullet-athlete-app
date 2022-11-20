@@ -1,13 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const controller = require("../controllers/personalRecord.controller");
+const controller = require("../controllers/personalGoal.controller");
 
 // PUBLIC ROUTES
 router.get("/user/:id", controller.getAllByUserId);
-router.get("/history", controller.getUserHistoryByMovement);
 router.get("/:id", controller.getOneById);
 router.post("/register", controller.postOne);
-router.put("/update/:id", controller.update);
+router.put("/achieved/:id", controller.achieved);
 router.delete("/delete/:id", controller.delete);
 
 // ADMIN ROUTES
