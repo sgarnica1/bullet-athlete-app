@@ -15,7 +15,7 @@ const skillsRouter = require("./skills.routes");
 const initRoutes = (app) => {
   app.use(config.BASE_PATH, publicRouter);
   app.use(`${config.BASE_PATH}/auth`, authRouter);
-  // app.use(authMiddleware.validateTokenActive); // Validation of token
+  app.use(authMiddleware.validateTokenActive); // TOKEN VALIDATION
   app.use(`${config.BASE_PATH}/users`, userRouter);
   app.use(`${config.BASE_PATH}/wods`, wodRouter);
   app.use(`${config.BASE_PATH}/wodscores`, wodScoreRouter);
