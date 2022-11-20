@@ -7,7 +7,7 @@ const userController = {
   // GET ALL USERS
   getAll: async (_, res) => {
     try {
-      const users = await User.find();
+      const users = await User.find().populate("roles");
       res.status(200).json(users);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -17,7 +17,7 @@ const userController = {
   // GET ONE
   getOne: async (req, res) => {
     try {
-      const user = await User.findById(req.params.id);
+      const user = await User.findById(req.params.id).populate("roles");
       res.status(200).json(user);
     } catch (error) {
       res.status(400).json({ error: error.message });
@@ -56,7 +56,7 @@ const userController = {
       email: req.body.email,
     });
     if (emailAlreadyRegistered) {
-      return res.status(400).json({ error: "Email already registered" });
+      return res.status(400).json({ error: "Este email ya está registrado" });
     }
 
     // HASH PASSWORD
@@ -141,7 +141,7 @@ const userController = {
     } catch (error) {
       res.status(501).json({ error: error.message });
     }
-  }
+  },
 };
 
 module.exports = userController;
