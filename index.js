@@ -29,22 +29,17 @@ db.then(() =>
 );
 db.catch((err) => console.log(err));
 
-// ROUTES
-initRoutes(app);
 
 // REDIRECT TO BASE PATH
 app.get("/", (_, res) => {
   res.redirect(config.BASE_PATH);
 });
 
-const authMiddleware = require("./src/middleware/auth");
-app.get("/user", authMiddleware.isAdmin, (req, res) =>
-  res.json({ message: "ok" })
-);
+// ROUTES
+initRoutes(app);
+
 
 // 404 ERROR
 app.use((_, res) => {
   res.status(404).json({ message: "Resource not found" });
 });
-
-// console.log(require('crypto').randomBytes(64).toString('hex'))
